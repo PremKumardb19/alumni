@@ -50,7 +50,28 @@ const formDataSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
+    assignedCompanyId: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CompanyData',
+        default: null,
+      }],
+      applicationStatus: [
+        {
+          assignedCompanyId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'CompanyData',
+            required: true, // add this to prevent null
+          },
+          status: {
+            type: String,
+            enum: ['pending', 'completed', 'not applicable'],
+            default: 'pending',
+          },
+        },
+      ]
+      
 }
+
 );
 
 const FormData = mongoose.model('FormData', formDataSchema);
